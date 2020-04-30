@@ -1,0 +1,256 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <title>设备管理系统</title>
+      <link rel="stylesheet" href="/layui/css/layui.css">
+    </head>
+    <body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+      <div class="layui-header">
+        <div class="layui-logo">设备管理系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+          <li class="layui-nav-item"><a href="">控制台</a></li>
+          <li class="layui-nav-item"><a href="">商品管理</a></li>
+          <li class="layui-nav-item"><a href="">用户</a></li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">其它系统</a>
+            <dl class="layui-nav-child">
+              <dd><a href="">邮件管理</a></dd>
+              <dd><a href="">消息管理</a></dd>
+              <dd><a href="">授权管理</a></dd>
+            </dl>
+          </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+          <li class="layui-nav-item">
+            <a href="javascript:;">
+              <img src="http://img.hao661.com/qq.hao661.com/uploads/allimg/180927/2239236144-14.jpg" class="layui-nav-img">
+              张三疯
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a href="">基本资料</a></dd>
+              <dd><a href="">安全设置</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+      </div>
+      
+      <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+          <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+          <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <li class="layui-nav-item layui-nav-itemed">
+              <a class="" href="javascript:;">所有商品</a>
+              <dl class="layui-nav-child">
+                <dd><a href="javascript:;">列表一</a></dd>
+                <dd><a href="javascript:;">列表二</a></dd>
+                <dd><a href="">超链接</a></dd>
+              </dl>
+            </li>
+            <li class="layui-nav-item">
+              <a href="javascript:;">解决方案</a>
+              <dl class="layui-nav-child">
+                <dd><a href="javascript:;">列表一</a></dd>
+                <dd><a href="">超链接</a></dd>
+              </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">云市场</a></li>
+            <li class="layui-nav-item"><a href="">发布商品</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="layui-body">
+        <!-- 内容主体区域 -->
+
+
+
+
+
+
+
+
+
+
+
+<div style="margin-bottom: 5px;">
+    <ins class="adsbygoogle" style="display:inline-block;width:700px;height:0px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+</div>
+
+<div class="demoTable">
+    搜索商户：
+    <div class="layui-inline">
+        <input class="layui-input" name="keyword" id="demoReload" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+</div>
+
+<table class="layui-hide" id="LAY_table_user" lay-filter="useruv"></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="reboot">重启</a>
+</script>
+
+
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#LAY_table_user'
+            ,url: '/data'
+            ,cols: [[
+                {checkbox: true, fixed: true}
+                ,{field:'id', title: 'ID', width:100, sort: true, fixed: true}
+                ,{field:'token', title: 'token', width:100, sort: true}
+                ,{field:'name', title: '设备名称', width:100, sort: true}
+                ,{field:'modelName', title: '终端型号', width:100}
+                ,{field:'hardwareVersion', title: '硬件版本', width:100}
+				,{field:'softwareVersion', title: '软件版本', width:100}
+				,{field:'wirelessMode', title: '工作模式', width:100}
+				,{field:'userScenario', title: '用户场景', width:100}
+                ,{field:'right', title: '操作', width:350, toolbar:"#barDemo"}
+				,{field:'info', style:'display:none;'}
+            ]]
+            ,id: 'testReload'
+            ,page: true
+            ,height: 600
+        });
+
+        var $ = layui.$, active = {
+            reload: function(){
+                var demoReload = $('#demoReload');
+
+                table.reload('testReload', {
+                    where: {
+                        keyword: demoReload.val()
+                    }
+                });
+            }
+        };
+
+        table.on('checkbox(useruv)', function(obj){
+            console.log(obj)
+        });
+        table.on('tool(useruv)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail') {
+                //layer.msg('ID：'+ data.id + ' 的查看操作');
+				layer.open({
+					type: 1
+					,title: false
+					,closeBtn: false
+					,area: '400px;'
+					,shade: 0.5
+					,id: 'LAY_layuipro'
+					,btn: ['确认']
+					,btnAlign: 'e'
+					,moveType: 1 
+					,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;"> ' + data.info
+			});
+            } else if(obj.event === 'reboot'){
+                layer.confirm('确认重启吗？', function(index){
+                    console.log(data);
+                    $.ajax({
+                        url: "command",
+                        type: "POST",
+                        data:{"uvid":data.id,"memthodname":"reboot","aid":data.aid},
+                        dataType: "json",
+                        success: function(data){
+                            if(data.state==1){
+                                layer.close(index);
+                                layer.msg("重启成功！", {icon: 6});
+                            }else{
+                                layer.msg("重启失败！", {icon: 5});
+                            }
+                        }
+                    });
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,title: '修改 ID 为 ['+ data.id +'] 的访问量'
+                    ,value: data.uv
+                }, function(value, index){
+                    EidtUv(data,value,index,obj);
+                });
+            }
+        });
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        function  EidtUv(data,value,index,obj) {
+            $.ajax({
+                url: "UVServlet",
+                type: "POST",
+                data:{"uvid":data.id,"memthodname":"edituv","aid":data.aid,"uv":value},
+                dataType: "json",
+                success: function(data){
+                    if(data.state==1){
+                        layer.close(index);
+                        obj.update({
+                            uv: value
+                        });
+                        layer.msg("修改成功", {icon: 6});
+                    }else{
+                        layer.msg("修改失败", {icon: 5});
+                    }
+                }
+
+            });
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div style="padding: 15px;">内容主体区域</div>
+      </div>
+      
+      <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+      </div>
+    </div>
+    <script src="../src/layui.js"></script>
+    <script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+      var element = layui.element;
+      
+    });
+    </script>
+    </body>
+    </html>
+          
